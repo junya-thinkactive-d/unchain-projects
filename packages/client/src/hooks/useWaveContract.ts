@@ -6,7 +6,7 @@ import WaveContractABI from '@/libs/hardhat/artifacts/contracts/WavePortal.sol/W
 import type { WavePortal as WaveType } from '@/libs/hardhat/types/WavePortal';
 import { getEthereumSafety } from '@/utils';
 
-const CONTRACT_ADDRESS = '0x59C96aB8854a1F19599975806475F691d21a43D8';
+const CONTRACT_ADDRESS = '0x13605E7340ac8cd74F05847C31094567739F24De';
 const CONTRACT_ABI = WaveContractABI.abi;
 
 type Props = {
@@ -17,6 +17,7 @@ type Props = {
 type AllWaves = {
   address: string;
   timestamp: Date;
+  name:string;
   message: string;
 }[];
 
@@ -60,6 +61,7 @@ export const useWaveContract = ({ enable, name, message }: Props): ReturnUseWave
       return {
         address: wave.waver,
         timestamp: new Date(wave.timestamp.toNumber() * 1000),
+        name:wave.name,
         message: wave.message,
       };
     });
@@ -69,7 +71,7 @@ export const useWaveContract = ({ enable, name, message }: Props): ReturnUseWave
   const handleWave = useCallback(async () => {
     try {
       if (!waveContract) return;
-      const waveTxn = await waveContract.wave(message);
+      const waveTxn = await waveContract.wave(name,message);
       setMining(true);
       await waveTxn.wait();
       setMining(false);
@@ -78,7 +80,7 @@ export const useWaveContract = ({ enable, name, message }: Props): ReturnUseWave
     } catch (error) {
       console.log(error);
     }
-  }, [handleGetAllWaves, handleGetTotalWaves, message, waveContract]);
+  }, [handleGetAllWaves, handleGetTotalWaves, message, name, waveContract]);
 
   useEffect(() => {
     if (!enable) return;

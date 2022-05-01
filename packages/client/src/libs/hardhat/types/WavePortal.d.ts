@@ -24,7 +24,7 @@ interface WavePortalInterface extends ethers.utils.Interface {
     "getAllWaves()": FunctionFragment;
     "getTotalWaves()": FunctionFragment;
     "lastWavedAt(address)": FunctionFragment;
-    "wave(string)": FunctionFragment;
+    "wave(string,string)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -36,7 +36,10 @@ interface WavePortalInterface extends ethers.utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "lastWavedAt", values: [string]): string;
-  encodeFunctionData(functionFragment: "wave", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "wave",
+    values: [string, string]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "getAllWaves",
@@ -53,16 +56,17 @@ interface WavePortalInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "wave", data: BytesLike): Result;
 
   events: {
-    "NewWave(address,uint256,string)": EventFragment;
+    "NewWave(address,uint256,string,string)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "NewWave"): EventFragment;
 }
 
 export type NewWaveEvent = TypedEvent<
-  [string, BigNumber, string] & {
+  [string, BigNumber, string, string] & {
     from: string;
     timestamp: BigNumber;
+    name: string;
     message: string;
   }
 >;
@@ -115,9 +119,10 @@ export class WavePortal extends BaseContract {
       overrides?: CallOverrides
     ): Promise<
       [
-        ([string, BigNumber, string] & {
+        ([string, BigNumber, string, string] & {
           waver: string;
           timestamp: BigNumber;
+          name: string;
           message: string;
         })[]
       ]
@@ -129,6 +134,7 @@ export class WavePortal extends BaseContract {
 
     wave(
       _message: string,
+      _name: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
@@ -136,9 +142,10 @@ export class WavePortal extends BaseContract {
   getAllWaves(
     overrides?: CallOverrides
   ): Promise<
-    ([string, BigNumber, string] & {
+    ([string, BigNumber, string, string] & {
       waver: string;
       timestamp: BigNumber;
+      name: string;
       message: string;
     })[]
   >;
@@ -149,6 +156,7 @@ export class WavePortal extends BaseContract {
 
   wave(
     _message: string,
+    _name: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -156,9 +164,10 @@ export class WavePortal extends BaseContract {
     getAllWaves(
       overrides?: CallOverrides
     ): Promise<
-      ([string, BigNumber, string] & {
+      ([string, BigNumber, string, string] & {
         waver: string;
         timestamp: BigNumber;
+        name: string;
         message: string;
       })[]
     >;
@@ -167,26 +176,32 @@ export class WavePortal extends BaseContract {
 
     lastWavedAt(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    wave(_message: string, overrides?: CallOverrides): Promise<void>;
+    wave(
+      _message: string,
+      _name: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {
-    "NewWave(address,uint256,string)"(
+    "NewWave(address,uint256,string,string)"(
       from?: string | null,
       timestamp?: null,
+      name?: null,
       message?: null
     ): TypedEventFilter<
-      [string, BigNumber, string],
-      { from: string; timestamp: BigNumber; message: string }
+      [string, BigNumber, string, string],
+      { from: string; timestamp: BigNumber; name: string; message: string }
     >;
 
     NewWave(
       from?: string | null,
       timestamp?: null,
+      name?: null,
       message?: null
     ): TypedEventFilter<
-      [string, BigNumber, string],
-      { from: string; timestamp: BigNumber; message: string }
+      [string, BigNumber, string, string],
+      { from: string; timestamp: BigNumber; name: string; message: string }
     >;
   };
 
@@ -199,6 +214,7 @@ export class WavePortal extends BaseContract {
 
     wave(
       _message: string,
+      _name: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
@@ -215,6 +231,7 @@ export class WavePortal extends BaseContract {
 
     wave(
       _message: string,
+      _name: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };

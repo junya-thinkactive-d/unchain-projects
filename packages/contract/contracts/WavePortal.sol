@@ -32,7 +32,7 @@ contract WavePortal {
         seed = (block.timestamp + block.difficulty) % 100;
     }
 
-    function wave(string memory _message, string memory _name) public {
+    function wave(string memory _name,string memory _message) public {
         require(
             lastWavedAt[msg.sender] + 30 seconds < block.timestamp,
             "Wait 30s"
