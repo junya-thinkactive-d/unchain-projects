@@ -47,12 +47,12 @@ const EthDApp = () => {
       {currentAccount && (
         <>
           <input
-           name="nameArea"
-           placeholder='DiscodeNameを入力'
-           id="name"
-           value={nameValue}
-           onChange={(e)=>setNameValue(e.target.value)}
-           className="text-gray-800 w-3/5 rounded-md p-2 mb-2"
+            name="nameArea"
+            placeholder="DiscodeNameを入力"
+            id="name"
+            value={nameValue}
+            onChange={(e) => setNameValue(e.target.value)}
+            className="text-gray-800 w-3/5 rounded-md p-2 mb-2"
           />
           <textarea
             name="messageArea"
@@ -73,6 +73,7 @@ const EthDApp = () => {
               <div key={index}>
                 <div>Adress: {wave.address}</div>
                 <div>Time: {wave.timestamp.toString()}</div>
+                {/* <div>Name: {wave.name}</div> */}
                 <div>Message: {wave.message}</div>
               </div>
             );

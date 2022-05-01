@@ -6,7 +6,7 @@ import WaveContractABI from '@/libs/hardhat/artifacts/contracts/WavePortal.sol/W
 import type { WavePortal as WaveType } from '@/libs/hardhat/types/WavePortal';
 import { getEthereumSafety } from '@/utils';
 
-const CONTRACT_ADDRESS = '0xBD1cfa4c0777e7aa106dcdF742649E39177014aC';
+const CONTRACT_ADDRESS = '0x59C96aB8854a1F19599975806475F691d21a43D8';
 const CONTRACT_ABI = WaveContractABI.abi;
 
 type Props = {
