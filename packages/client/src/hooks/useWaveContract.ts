@@ -6,11 +6,12 @@ import WaveContractABI from '@/libs/hardhat/artifacts/contracts/WavePortal.sol/W
 import type { WavePortal as WaveType } from '@/libs/hardhat/types/WavePortal';
 import { getEthereumSafety } from '@/utils';
 
-const CONTRACT_ADDRESS = '0x2F1940a6886a55E509b796791Fdfa87b555F5ca3';
+const CONTRACT_ADDRESS = '0xBD1cfa4c0777e7aa106dcdF742649E39177014aC';
 const CONTRACT_ABI = WaveContractABI.abi;
 
 type Props = {
   enable: boolean;
+  name: string;
   message: string;
 };
 type AllWaves = {
@@ -26,7 +27,7 @@ type ReturnUseWaveContract = {
   handleWave: () => void;
 };
 
-export const useWaveContract = ({ enable, message }: Props): ReturnUseWaveContract => {
+export const useWaveContract = ({ enable, name, message }: Props): ReturnUseWaveContract => {
   const [totalWaves, setTotalWaves] = useState<number>(0);
   const [mining, setMining] = useState<boolean>(false);
   const [allWaves, setAllWaves] = useState<AllWaves>([]);

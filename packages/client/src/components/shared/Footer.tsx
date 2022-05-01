@@ -5,9 +5,8 @@ const Footer = () => {
   return (
     <footer className="container">
       <div className="w-full flex justify-center items-center bg-gray-600 px-6 py-4 fixed bottom-0 h-20">
-        <Link href="#">
+        <Link href="https://twitter.com/junya_tad">
           <a
-            href="#"
             aria-label="twitter"
             className="flex justify-center items-center text-gray-900 hover:text-gray-700 fill-sky-600 hover:fill-sky-400"
           >

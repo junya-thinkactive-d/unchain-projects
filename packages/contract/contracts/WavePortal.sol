@@ -9,11 +9,17 @@ contract WavePortal {
 
     uint256 private seed;
 
-    event NewWave(address indexed from, uint256 timestamp, string message);
+    event NewWave(
+        address indexed from,
+        uint256 timestamp,
+        string name,
+        string message
+    );
 
     struct Wave {
         address waver;
         uint256 timestamp;
+        string name;
         string message;
     }
 
@@ -26,7 +32,7 @@ contract WavePortal {
         seed = (block.timestamp + block.difficulty) % 100;
     }
 
-    function wave(string memory _message) public {
+    function wave(string memory _message, string memory _name) public {
         require(
             lastWavedAt[msg.sender] + 30 seconds < block.timestamp,
             "Wait 30s"
@@ -36,7 +42,7 @@ contract WavePortal {
         totalWaves += 1;
         console.log("%s has waved!", msg.sender, _message);
 
-        waves.push(Wave(msg.sender, block.timestamp, _message));
+        waves.push(Wave(msg.sender, block.timestamp, _name, _message));
 
         seed = (block.difficulty + block.timestamp + seed) % 100;
 
@@ -55,7 +61,7 @@ contract WavePortal {
             console.log("%s did not win.", msg.sender);
         }
 
-        emit NewWave(msg.sender, block.timestamp, _message);
+        emit NewWave(msg.sender, block.timestamp, _name, _message);
     }
 
     function getAllWaves() public view returns (Wave[] memory) {
