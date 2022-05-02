@@ -1,5 +1,6 @@
-import { useWallet, useWaveContract } from '@/hooks';
 import { useState, useCallback } from 'react';
+import { useWallet, useWaveContract } from '@/hooks';
+import { Cards } from '@/components/pages/Eth-dApp';
 
 const EthDApp = () => {
   const [nameValue, setNameValue] = useState<string>('');
@@ -15,9 +16,11 @@ const EthDApp = () => {
   const handleInputText = useCallback(() => {
     setInputText(!inputText);
   }, [inputText]);
+
   return (
-    <div className="min-h-screen flex flex-col justify-start items-center bg-blue-900 text-white">
-      <div className="text-4xl my-4">
+    <div className='container px-6 mx-auto'>
+      <div className="px-6 mx-auto mb-20 min-h-screen flex flex-col justify-start items-center bg-blue-900 text-white">
+      <div className="lg:text-4xl text-2xl my-4">
         <span role="img" aria-label="hand-wave">
           👋
         </span>{' '}
@@ -26,7 +29,7 @@ const EthDApp = () => {
           👋
         </span>
       </div>
-      <div className="text-xl">
+      <div className="text-xl text-center sm:text-sm">
         イーサリアムウォレットを接続して、
         <span role="img" aria-label="hand-wave">
           👋
@@ -51,14 +54,14 @@ const EthDApp = () => {
             Input Text
           </button>
           {inputText && (
-            <>
+            <div className="flex flex-col lg:w-4/6 w-full mb-8">
               <input
                 name="nameArea"
                 placeholder="DiscodeNameを入力"
                 id="name"
                 value={nameValue}
                 onChange={(e) => setNameValue(e.target.value)}
-                className="text-gray-800 w-3/5 rounded-md p-2 mb-2"
+                className="text-gray-800 rounded-md p-2 mb-2"
               />
               <textarea
                 name="messageArea"
@@ -66,31 +69,20 @@ const EthDApp = () => {
                 id="message"
                 value={messageValue}
                 onChange={(e) => setMessageValue(e.target.value)}
-                className="text-gray-800 w-3/5 h-24 rounded-md p-2"
+                className="text-gray-800 h-24 rounded-md p-2"
               />
               <button className="p-2 my-2 bg-amber-300 rounded-md" onClick={handleWave}>
                 Wave at Me
               </button>
-            </>
+            </div>
           )}
         </>
       )}
 
-      {currentAccount &&
-        allWaves
-          .slice(0)
-          .reverse()
-          .map((wave, index) => {
-            return (
-              <div key={index}>
-                <div>Adress: {wave.address}</div>
-                <div>Time: {wave.timestamp.toString()}</div>
-                <div>Name: {wave.name}</div>
-                <div>Message: {wave.message}</div>
-              </div>
-            );
-          })}
+      <Cards currentAccount={currentAccount} allWaves={allWaves} />
     </div>
+    </div>
+    
   );
 };
 

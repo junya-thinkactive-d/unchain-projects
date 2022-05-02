@@ -17,7 +17,7 @@ type Props = {
 type AllWaves = {
   address: string;
   timestamp: Date;
-  name:string;
+  name: string;
   message: string;
 }[];
 
@@ -61,7 +61,7 @@ export const useWaveContract = ({ enable, name, message }: Props): ReturnUseWave
       return {
         address: wave.waver,
         timestamp: new Date(wave.timestamp.toNumber() * 1000),
-        name:wave.name,
+        name: wave.name,
         message: wave.message,
       };
     });
@@ -71,7 +71,7 @@ export const useWaveContract = ({ enable, name, message }: Props): ReturnUseWave
   const handleWave = useCallback(async () => {
     try {
       if (!waveContract) return;
-      const waveTxn = await waveContract.wave(name,message);
+      const waveTxn = await waveContract.wave(name, message);
       setMining(true);
       await waveTxn.wait();
       setMining(false);
@@ -83,11 +83,11 @@ export const useWaveContract = ({ enable, name, message }: Props): ReturnUseWave
   }, [handleGetAllWaves, handleGetTotalWaves, message, name, waveContract]);
 
   useEffect(() => {
-    if (!enable) return;
+    if (!waveContract) return;
     handleGetContractBalance();
     handleGetTotalWaves();
     handleGetAllWaves();
-  }, [enable, handleGetAllWaves, handleGetContractBalance, handleGetTotalWaves]);
+  }, [enable, handleGetAllWaves, handleGetContractBalance, handleGetTotalWaves, waveContract]);
 
   return {
     mining,

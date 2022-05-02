@@ -20,15 +20,15 @@ const Header = () => {
 
             <div className="flex items-center flex-wrap justify-center mt-6 text-gray-100 capitalize dark:text-gray-800 bg-gray-800 dark:bg-gray-100 p-2">
               {projects.map((project) => (
-                <Link href={`/${project.link}`} key={project.id}>
+                <Link href={`/${project.link}`} key={project.id} >
                   <a
                     className={`normal-case ${
                       path === `/${project.link}`
-                        ? 'normal-case text-sky-300 border-b-2 border-blue-500 mx-1.5 sm:mx-6'
-                        : 'border-b-2 border-transparent hover:text-gray-500 hover:border-blue-500 mx-1.5 sm:mx-6'
+                        ? 'normal-case text-sky-300 border-b-2 border-blue-500 sm:mx-6'
+                        : 'border-b-2 border-transparent hover:text-gray-500 hover:border-blue-500 sm:mx-6'
                     }`}
                   >
-                    {project.name}
+                    <span className='mx-2'>●</span>{project.name}
                   </a>
                 </Link>
               ))}

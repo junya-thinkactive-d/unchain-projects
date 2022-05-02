@@ -27,7 +27,7 @@ export const useWallet = (): ReturnUseWallet => {
     } else {
       alert('No authorized account found');
     }
-  }, []);
+  },[]);
 
   const checkIfWalletIsConnected = useCallback(async () => {
     if (!ethereum) return;
@@ -58,7 +58,6 @@ export const useWallet = (): ReturnUseWallet => {
 
   useEffect(() => {
     if (!ethereum) return;
-    checkIfWalletIsConnected();
     const handleChainChanged = (chainId: unknown) => {
       if (typeof chainId === 'string') {
         setCurrentChainId(chainId);
