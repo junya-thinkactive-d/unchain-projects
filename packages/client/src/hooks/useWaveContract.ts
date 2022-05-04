@@ -6,19 +6,22 @@ import WaveContractABI from '@/libs/hardhat/artifacts/contracts/WavePortal.sol/W
 import type { WavePortal as WaveType } from '@/libs/hardhat/types/WavePortal';
 import { getEthereumSafety } from '@/utils';
 
-const CONTRACT_ADDRESS = '0x13605E7340ac8cd74F05847C31094567739F24De';
+const CONTRACT_ADDRESS = '0xBB7a75304B0945e3171bB74b3e0d0a576BfC8Ea0';
 const CONTRACT_ABI = WaveContractABI.abi;
 
 type Props = {
   enable: boolean;
   name: string;
   message: string;
+  waveCount: number;
 };
 type AllWaves = {
   address: string;
   timestamp: Date;
   name: string;
   message: string;
+  waveCount: number;
+  winOrLose: boolean;
 }[];
 
 type ReturnUseWaveContract = {
@@ -28,7 +31,7 @@ type ReturnUseWaveContract = {
   handleWave: () => void;
 };
 
-export const useWaveContract = ({ enable, name, message }: Props): ReturnUseWaveContract => {
+export const useWaveContract = ({ enable, name, message, waveCount }: Props): ReturnUseWaveContract => {
   const [totalWaves, setTotalWaves] = useState<number>(0);
   const [mining, setMining] = useState<boolean>(false);
   const [allWaves, setAllWaves] = useState<AllWaves>([]);
@@ -63,6 +66,8 @@ export const useWaveContract = ({ enable, name, message }: Props): ReturnUseWave
         timestamp: new Date(wave.timestamp.toNumber() * 1000),
         name: wave.name,
         message: wave.message,
+        waveCount: wave.wavecount.toNumber(),
+        winOrLose: wave.winOrLose,
       };
     });
     setAllWaves(waveCleaned);
@@ -71,7 +76,9 @@ export const useWaveContract = ({ enable, name, message }: Props): ReturnUseWave
   const handleWave = useCallback(async () => {
     try {
       if (!waveContract) return;
-      const waveTxn = await waveContract.wave(name, message);
+      const waveTxn = await waveContract.mintWave(name, message, waveCount, {
+        value: ethers.utils.parseEther(`${waveCount / 10000}`),
+      });
       setMining(true);
       await waveTxn.wait();
       setMining(false);
@@ -80,7 +87,7 @@ export const useWaveContract = ({ enable, name, message }: Props): ReturnUseWave
     } catch (error) {
       console.log(error);
     }
-  }, [handleGetAllWaves, handleGetTotalWaves, message, name, waveContract]);
+  }, [handleGetAllWaves, handleGetTotalWaves, message, name, waveContract, waveCount]);
 
   useEffect(() => {
     if (!waveContract) return;

@@ -9,6 +9,7 @@ contract WavePortal {
     using SafeMath for uint256;
 
     uint256 public constant PRICE = 0.0001 ether;
+    uint256 public constant LUCKY_PRICE = 0.001 ether;
     uint256 public constant MAX_PER_MINT = 5;
     uint256 totalWaves;
     uint256 private seed;
@@ -40,6 +41,16 @@ contract WavePortal {
         seed = (block.timestamp + block.difficulty) % 100;
     }
 
+    function mintWave(
+        string memory _name,
+        string memory _message,
+        uint256 _wavecount
+    ) public payable {
+        require(_wavecount > 0 && _wavecount <= MAX_PER_MINT, "Not enough");
+        require(msg.value >= PRICE.mul(_wavecount), "Not enough");
+        wave(_name, _message, _wavecount);
+    }
+
     function wave(
         string memory _name,
         string memory _message,
@@ -54,16 +65,13 @@ contract WavePortal {
         totalWaves += _wavecount;
         console.log("%s has waved!", msg.sender, _message);
 
-        require(_wavecount > 0 && _wavecount <= MAX_PER_MINT, "");
-        require(msg.value >= PRICE.mul(_wavecount), "");
-
         seed = (block.difficulty + block.timestamp + seed) % 100;
 
         console.log("Radom # generated: %d", seed);
 
-        if (seed <= 30) {
+        if (seed <= 20) {
             console.log("%s won!", msg.sender);
-            uint256 prizeAmount = PRICE.mul(_wavecount);
+            uint256 prizeAmount = LUCKY_PRICE.mul(_wavecount);
             require(
                 prizeAmount <= address(this).balance,
                 "Trying to withdraw more money than the contract has."
