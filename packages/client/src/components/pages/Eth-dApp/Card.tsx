@@ -33,7 +33,7 @@ const Card = ({ wave }: Props) => {
             {wave.name}
           </span>
           <span className="px-3 py-1 text-xs text-blue-800 uppercase bg-blue-200 rounded-full dark:bg-blue-300 dark:text-blue-900">
-            {dayjs(wave.timestamp.toString()).format('YYYY/M/D/h:m:s')}
+            {dayjs(wave.timestamp.toString()).format('YYYY/M/D/H:m:s')}
           </span>
         </div>
 
@@ -43,8 +43,8 @@ const Card = ({ wave }: Props) => {
         </div>
 
         <div className="flex-col justify-between items-center text-gray-800 mt-4">
-          <div>Sent Wave:{waveCounts}</div>
-          <div>{wave.winOrLose ? <p>Lucky!{wave.waveCount / 1000}ETH</p> : <p>No refund</p>}</div>
+          <div className='text-sm p-1 border border-gray-800 mb-1'>Sent Wave:{waveCounts}</div>
+          <div>{wave.winOrLose ? <p className='text-white bg-amber-400 p-1 text-sm text-center'>Lucky!{wave.waveCount / 1000}ETH</p> : <p className='text-white bg-gray-800 p-1 text-sm text-center'>No refund</p>}</div>
         </div>
       </div>
     </>
