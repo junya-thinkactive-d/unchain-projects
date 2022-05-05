@@ -42,7 +42,7 @@ const Card = ({ wave }: Props) => {
           <p className="mt-2 text-md text-gray-600 dark:text-gray-300">{wave.message}</p>
         </div>
 
-        <div className="flex justify-between items-center text-gray-800 mt-4">
+        <div className="flex-col justify-between items-center text-gray-800 mt-4">
           <div>Sent Wave:{waveCounts}</div>
           <div>{wave.winOrLose ? <p>Lucky!{wave.waveCount / 1000}ETH</p> : <p>No refund</p>}</div>
         </div>

@@ -10,7 +10,7 @@ const main = async () => {
   const waveContractFactory = await ethers.getContractFactory("WavePortal");
 
   const waveContract = await waveContractFactory.deploy({
-    value: ethers.utils.parseEther("0.001"),
+    value: ethers.utils.parseEther("0.01"),
   });
 
   await waveContract.deployed();
@@ -21,9 +21,11 @@ const main = async () => {
 const runMain = async () => {
   try {
     await main();
+    // eslint-disable-next-line no-process-exit
     process.exit(0);
   } catch (error) {
     console.log(error);
+    // eslint-disable-next-line no-process-exit
     process.exit(1);
   }
 };

@@ -46,7 +46,7 @@ export const useWallet = (): ReturnUseWallet => {
   const connectWallet = async () => {
     try {
       if (!ethereum) {
-        alert('MetaMask の Chrome 拡張をインストールしてください');
+        alert('Get Metamask!');
         return;
       }
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
@@ -58,6 +58,7 @@ export const useWallet = (): ReturnUseWallet => {
 
   useEffect(() => {
     if (!ethereum) return;
+    checkIfWalletIsConnected()
     const handleChainChanged = (chainId: unknown) => {
       if (typeof chainId === 'string') {
         setCurrentChainId(chainId);
