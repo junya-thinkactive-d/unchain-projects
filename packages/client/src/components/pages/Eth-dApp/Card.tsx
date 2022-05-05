@@ -14,11 +14,11 @@ type Props = {
   wave: Wave;
 };
 
-const Cards = ({ wave }: Props) => {
+const Card = ({ wave }: Props) => {
   let waveCounts = [];
   for (let i = 0; i < wave.waveCount; i++) {
     waveCounts.push(
-      <span role="img" aria-label="hand-wave">
+      <span key={i} role="img" aria-label="hand-wave">
         👋
       </span>,
     );
@@ -51,4 +51,4 @@ const Cards = ({ wave }: Props) => {
   );
 };
 
-export default Cards;
+export default Card;

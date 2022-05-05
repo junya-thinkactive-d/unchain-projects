@@ -42,7 +42,7 @@ const HomeSwiper = () => {
                 </h1>
                 <p className="mt-4 text-gray-600 dark:text-gray-300">{project.description}</p>
                 <div className="mt-6">
-                  <Link href={project.link}>
+                  <Link href={`/${project.link}`}>
                     <a className="block px-3 py-2 font-semibold text-center text-white transition-colors duration-200 transform bg-blue-500 rounded-md lg:inline hover:bg-blue-400">
                       Show App!
                     </a>

@@ -7,6 +7,8 @@ type Wave = {
   timestamp: Date;
   name: string;
   message: string;
+  waveCount: number;
+  winOrLose: boolean;
 };
 type Props = {
   currentAccount: CurrentAccount;

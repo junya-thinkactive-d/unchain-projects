@@ -69,7 +69,7 @@ contract WavePortal {
 
         console.log("Radom # generated: %d", seed);
 
-        if (seed <= 20) {
+        if (seed <= 5) {
             console.log("%s won!", msg.sender);
             uint256 prizeAmount = LUCKY_PRICE.mul(_wavecount);
             require(

@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useWallet, useWaveContract } from '@/hooks';
 import { Cards } from '@/components/pages/Eth-dApp';
+import { Mining } from '@/components/shared';
 
 const EthDApp = () => {
   const [nameValue, setNameValue] = useState<string>('');
@@ -20,6 +21,7 @@ const EthDApp = () => {
       setWaveCount(waveCount + 1);
     }
   }, [waveCount]);
+
   const handleDecCount = useCallback(() => {
     if (waveCount > 0) {
       setWaveCount(waveCount - 1);
@@ -32,23 +34,19 @@ const EthDApp = () => {
 
   return (
     <div className="container px-6 mx-auto">
-      {mining && (
-        <div className="w-screen h-screen absolute top-0 left-0 flex justify-center itmes-center bg-gray800 bg-opacity-30">
-          <div className="animate-spin h-10 w-10 border-4 border-blue-500 rounded-full border-t-transparent"></div>
-        </div>
-      )}
+      <Mining mining={mining} />
       <div className="px-6 mx-auto mb-20 min-h-screen flex flex-col justify-start items-center bg-blue-900 text-white">
         <div className="lg:text-4xl text-2xl my-4">
           <span role="img" aria-label="hand-wave">
             👋
           </span>{' '}
-          WELLCOME{' '}
+          TO MAKE THE WORLD BETTER!{' '}
           <span role="img" aria-label="hand-wave">
             👋
           </span>
         </div>
         <div className="text-xl text-center sm:text-sm">
-          イーサリアムウォレットを接続して、
+          より良い世界を実現するためにあなたの
           <span role="img" aria-label="hand-wave">
             👋
           </span>
@@ -56,6 +54,8 @@ const EthDApp = () => {
           <span role="img" aria-label="shine">
             ✨
           </span>
+          <div>1Wave = 0.00001ETH 20%でWave × 0.0001ETHがバックされます(なんと10倍)</div>
+          <div>集まった資金は、あなたが送ったWaveの数を投票することで世界がより良くなるための事業に寄付されます</div>
         </div>
         <div className="border border-b py-1 px-2 mt-2">TOTAL : {totalWaves} WAVES</div>
 
@@ -106,8 +106,7 @@ const EthDApp = () => {
             )}
           </>
         )}
-
-        <Cards currentAccount={currentAccount} allWaves={allWaves} />
+        {currentAccount && <Cards currentAccount={currentAccount} allWaves={allWaves} />}
       </div>
     </div>
   );
