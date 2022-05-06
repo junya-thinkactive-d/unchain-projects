@@ -32,12 +32,16 @@ const EthDAppContract = () => {
     setInputText(!inputText);
   }, [inputText]);
 
-  const handleWaveClick = useCallback(async () => {
-    handleWave();
-    setNameValue('');
-    setMessageValue('');
-    setWaveCount(0);
-  }, [handleWave]);
+  const handleWaveClick = useCallback(() => {
+    if (!isRinkebyTestNetwork) {
+      alert('Rinkebyテストネットワークに接続してください');
+    } else {
+      handleWave();
+      setNameValue('');
+      setMessageValue('');
+      setWaveCount(0);
+    }
+  }, [handleWave, isRinkebyTestNetwork]);
 
   return (
     <div className="container px-6 mx-auto">
